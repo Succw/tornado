@@ -1,14 +1,21 @@
-<!DOCTYPE>
+<!DOCTYPE html>
 <html>
 <head><title>Index!</title></head>
 <body>
     <h1>输入用户信息.</h1>
-    <form method="post" action="/post">
+    <form method="post" action="/infopst">
         <p>姓名<br><input type="text" name="name"></p>
         <p>邮箱<br><input type="email" name="email"></p>
         <p>电话<br><input type="tel" name="phone"></p>
         <p>地址<br><input type="text" name="address"></p>
         <input type="submit">
+        <!--{% if book == 'python' %}-->
+            <!--<li>{{ squeeze(book) }}</li>-->
+        <!--{% else %}-->
+            <!--<li>'other book'</li>-->
+        <!--{% end %}-->
+        <li>{{ book }}</li>
+        <li>{{ escape(book) }}</li>
     </form>
 </body>
 </html>
