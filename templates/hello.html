@@ -1,0 +1,24 @@
+{% extends 'main.html' %}
+
+{% block title %}Hello World{% end %}
+
+{% block header %}
+    <h1>Talkin' About Books With Burt</h1>
+{% end %}
+
+{% block body %}
+    <div id="hello">
+        <p>Welcome to Burt's Books!</p>
+        <p>{{ escape(books) }}</p>
+        <p>...</p>
+    </div>
+{% end %}
+
+{% block footer %}
+    <p>It's Footer!</p>
+    <p class="small">
+        Follow us on Facebook at
+        {% raw linkify("https://www.succw.com", extra_params='ref=website') %}.
+    </p>
+    {% module Hello() %}
+{% end %}

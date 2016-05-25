@@ -66,6 +66,9 @@ class IndexHandler(tornado.web.RequestHandler):
 #     static_path=os.path.join(os.path.dirname(__file__),"static"),
 #     Debug=True,
 #     )
+class HelloModule(tornado.web.UIModule):
+    def render(self):
+        return "<h1>Hello Module!</h1>"
 
 class Application(tornado.web.Application):
     def __init__(self):
@@ -76,16 +79,22 @@ class Application(tornado.web.Application):
                 (r'/',IndexHandler),
                 (r'/hello',HelloHandler)
         ]
+
+        ui_modules = dict(
+            Hello=HelloModule
+        )
         settings = dict(
                 template_path=os.path.join(os.path.dirname(__file__),"templates"),
                 static_path=os.path.join(os.path.dirname(__file__),"static"),
                 Debug=True,
         )
-        tornado.web.Application.__init__(self,handlers,**settings)
+
+        tornado.web.Application.__init__(self,handlers,ui_modules,**settings)
 
 class HelloHandler(tornado.web.RequestHandler):
     def get(self):
-        self.render('hello.html',header_text='My Books!')
+        book = self.get_argument('book')
+        self.render('hello.html',books=book)
 
     def write_error(self, status_code, **kwargs):
         self.write('Http Error Code: %d' % status_code)
