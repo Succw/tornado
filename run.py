@@ -55,19 +55,44 @@ class IndexHandler(tornado.web.RequestHandler):
     def write_error(self, status_code, **kwargs):
         self.write('Error Code: %d' % status_code)
 
-def make_app():
-    return tornado.web.Application(handlers=[
-    (r'/info',InfoHandler),
-    (r'/infopst',InfoPostHandler),
-    (r'/munger',MungerHandler),
-    (r'/',IndexHandler)],
-    template_path=os.path.join(os.path.dirname(__file__),"templates"),
-    static_path=os.path.join(os.path.dirname(__file__),"static"),
-    )
+# def make_app():
+#     return tornado.web.Application(handlers=[
+#     (r'/info',InfoHandler),
+#     (r'/infopst',InfoPostHandler),
+#     (r'/munger',MungerHandler),
+#     (r'/',IndexHandler),
+#     (r'/hello',HelloHandler)],
+#     template_path=os.path.join(os.path.dirname(__file__),"templates"),
+#     static_path=os.path.join(os.path.dirname(__file__),"static"),
+#     Debug=True,
+#     )
+
+class Application(tornado.web.Application):
+    def __init__(self):
+        handlers = [
+                (r'/info',InfoHandler),
+                (r'/infopst',InfoPostHandler),
+                (r'/munger',MungerHandler),
+                (r'/',IndexHandler),
+                (r'/hello',HelloHandler)
+        ]
+        settings = dict(
+                template_path=os.path.join(os.path.dirname(__file__),"templates"),
+                static_path=os.path.join(os.path.dirname(__file__),"static"),
+                Debug=True,
+        )
+        tornado.web.Application.__init__(self,handlers,**settings)
+
+class HelloHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render('hello.html',header_text='My Books!')
+
+    def write_error(self, status_code, **kwargs):
+        self.write('Http Error Code: %d' % status_code)
 
 if __name__ == '__main__':
     tornado.options.parse_command_line()
-    app = make_app()
+    app = Application()
     http_server = tornado.httpserver.HTTPServer(app)
     http_server.listen(options.port)
     tornado.ioloop.IOLoop.instance().start()
