@@ -1,6 +1,19 @@
 body {
     font-family: Helvetica,Arial,sans-serif;
-    width: 600px;
+    width: 700px;
     margin: 0 auto;
+    color: gray;
+}
+.divp
+{
+    border:2px solid #a1a1a1;
+    padding:10px 40px;
+    background:#dddddd;
+    width:300px;
 }
 .replaced:hover { color: #00f; }
+
+.small
+{
+    font:6px;
+}

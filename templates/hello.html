@@ -1,24 +1,25 @@
 {% extends 'main.html' %}
 
-{% block title %}Hello World{% end %}
+{% block title %}{{ title }}{% end %}
 
 {% block header %}
     <h1>Talkin' About Books With Burt</h1>
 {% end %}
 
 {% block body %}
+    <u><h3>Comments</h3></u>
     <div id="hello">
-        <p>Welcome to Burt's Books!</p>
-        <p>{{ escape(books) }}</p>
-        <p>...</p>
+        {% for content in contents %}
+        <p class="divp">{{ content }}</p>
+        {% end %}
     </div>
 {% end %}
 
 {% block footer %}
-    <p>It's Footer!</p>
     <p class="small">
         Follow us on Facebook at
         {% raw linkify("https://www.succw.com", extra_params='ref=website') %}.
+        {% module Hello() %}
     </p>
-    {% module Hello() %}
+
 {% end %}
